@@ -2,7 +2,7 @@
 
 
 (* Protocol Version *)
-type ProtoVersion = POC1 | POC2 | POC3 | POC4;;
+type protocolVersion = POC1 | POC2 | POC3 | POC4 ;;
 
 let protoversion_to_code p = match p with
 	  POC1 -> 0x00
@@ -13,7 +13,7 @@ let protoversion_to_code p = match p with
 
 
 (* Disconnect reason *)
-let DisconnectReason =
+type disconnectReason =
 	  Requested
 	| TCPError
 	| BadProtocol
@@ -25,7 +25,7 @@ let DisconnectReason =
 	| Quitting
 ;;
 
-let disconnectreason_to_code dr =
+let disconnectreason_to_code dr = match dr with
 	  Requested -> 0x00
 	| TCPError -> 0x01
 	| BadProtocol -> 0x02
@@ -39,7 +39,7 @@ let disconnectreason_to_code dr =
 
 
 (* Node capabilities *)
-type Capability =
+type capability =
 	  PeerDiscovery
 	| TransactionRelaying
 	| BlockChainQuerying
@@ -53,7 +53,7 @@ let capability_to_code cap = match cap with
 
 
 (* Commands *)
-type Command =
+type command =
 	  Hello
 	| Disconnect
 	| Ping
@@ -67,17 +67,17 @@ type Command =
 	| GetTransactions
 ;;
 
-type HelloMessage 
+type helloMessage =
 {
-	protocol 	: ProtocolVersion;
+	protocol 	: protocolVersion;
 	network_id 	: int;
 	client_id 	: string;
-	capability 	: Capability;
+	capability 	: capability;
 	listen_port : int;
 	node_id		: string;
 };;
 
-let command_to_string (cmd:Command) = match cmd with
+let command_to_string (cmd:command) = match cmd with
 	  Hello -> "hello"
 	| Disconnect -> "disconnect"
 	| Ping -> "ping"
@@ -91,7 +91,7 @@ let command_to_string (cmd:Command) = match cmd with
 	| GetTransactions -> "gettransactions"
 ;;
 
-let command_to_code (cmd:Command) = match cmd with
+let command_to_code (cmd:command) = match cmd with
 	  Hello -> 0x00
 	| Disconnect -> 0x01
 	| Ping -> 0x02

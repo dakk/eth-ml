@@ -39,7 +39,7 @@ let rpc_request meth params =
 		match ps with
 			  [] -> ""
 			| p::ps' ->
-				String.concat "&" [String.concat "=" [fst (p), snd (p)]; data ps']
+				String.concat "&" [String.concat "=" [fst (p); snd (p)]; data ps']
 	in
 	let post_para = [("Content-Type", "application/json; charset=utf-8");
 		     ("Cache-Control", "no-cache");
