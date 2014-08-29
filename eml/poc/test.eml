@@ -1,0 +1,40 @@
+type Result =
+	  Int of int32
+	| List of Int list
+;;
+
+type Storage = Array;;
+
+type Contract =
+{
+	storage: Storage
+};
+
+
+failwith -> suicide
+
+
+init : Contract -> Message -> Contract
+code : Contract -> Message -> (Contract, Result)
+
+
+(* Subcurrency *)
+let init (c:Contract) (msg:Message) =
+	c with storage as { msg.sender: 1000 }
+;;
+
+let code (c:Contract) (msg:Message) =
+	let from = msg.sender in
+	let from_value = c.storage.[from] in
+	let to = msg.data.[0] in 
+	let value = msg.data.[1] in
+
+	if fromvalue >= value then
+		(c with storage as
+			{
+				from: fromvalue - value;
+				to: c.storage.[to] + value;
+			}, Int 1)
+	else
+		(c, Int 0)
+;;
